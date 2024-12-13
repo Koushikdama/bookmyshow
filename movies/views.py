@@ -67,6 +67,7 @@ def book_seats(request,theater_id):
                 continue
             try:
                 print("try")
+                print("seat",seat,"movie",theaters.movie,"theater",theaters)
                 Booking.objects.create(
                     user=request.user,
                     seat=seat,
