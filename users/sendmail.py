@@ -29,6 +29,7 @@ def sendmail(email, sendername, body, seat_details):
     
     # Ensure recipient_list is a list
     recipient_list = ["koushikdama5@gmail.com"]  # Correctly wrapped in a list
+    recipient_list = [email]
     
     # Send the email
     send_mail(subject, email_message, email_from, recipient_list)
