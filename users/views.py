@@ -5,27 +5,43 @@ from django.contrib.auth import login,authenticate
 from django.contrib.auth.decorators import login_required
 from movies.models import Movie , Booking,Theater
 from datetime import datetime
+from datetime import datetime, timedelta
+from django.shortcuts import render
+from movies.models import Movie, Theater
+
 def home(request):
-    movies= Movie.objects.all()
+    # Get all movies
+    movies = Movie.objects.all()
     
-      # Get the current date
+    # Get the current date
     current_date = datetime.now().date()
 
     # Query theaters for shows happening today
     todays_shows = Theater.objects.filter(time__date=current_date)
-    print("todays_shows",todays_shows)
+    print("todays_shows", todays_shows)
+
+    # Calculate tomorrow's date
+    tomorrow_date = current_date + timedelta(days=1)
+
+    # Filter the shows for tomorrow's date
+    tomorrow_shows = Theater.objects.filter(time__date=tomorrow_date)
+    print("tomarrow", tomorrow_shows)
 
     # Extract movies from the shows
     movies_with_shows_today = Movie.objects.filter(theaters__in=todays_shows).distinct()
+    movies_with_shows_tomorrow = Movie.objects.filter(theaters__in=tomorrow_shows).distinct()
     
-    print("movies_with_shows_today ",movies_with_shows_today)
+    print("movies_with_shows_today", movies_with_shows_today)
     for i in movies_with_shows_today:
-        print("iii",i.name)
+        print("iii", i.name)
     
-    
-    
-    
-    return render(request,'home.html',{'movies':movies,'todat_shows':movies_with_shows_today})
+    # Pass the data to the template
+    return render(request, 'home.html', {
+        'movies': movies,
+        'todat_shows': movies_with_shows_today,
+        'tomorrow_shows': movies_with_shows_tomorrow
+    })
+
 def register(request):
     if request.method == 'POST':
         form=UserRegisterForm(request.POST)

@@ -50,6 +50,19 @@ class SeatAvailabilityConsumer(AsyncWebsocketConsumer):
             })
 
         return seat_data
+    @sync_to_async
+    def book_seat(self, seat_number):
+        try:
+            seat = Seat.objects.get(seat_number=seat_number, theater_id=self.theater_id)
+            if not seat.is_booked:
+                seat.is_booked = True
+                seat.save()
+            else:
+                raise ValueError("Seat already booked")
+        except Seat.DoesNotExist:
+            raise ValueError("Seat not found")
+        except ValueError as e:
+            return str(e)
 
     async def send_seat_availability(self):
         seat_data = await self.get_seat_availability()
