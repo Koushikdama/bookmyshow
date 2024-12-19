@@ -39,6 +39,7 @@ def home(request):
     return render(request, 'home.html', {
         'movies': movies,
         'todat_shows': movies_with_shows_today,
+        'tomorrow_shows':tomorrow_shows,
         
     })
 
