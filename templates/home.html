@@ -125,7 +125,7 @@
     {% endif %}
   
     <div class="section-title">Recommended Movies</div>
-    <div class="row" style="background-color: lightgreen;">
+    <div class="row" style="background-color: lightblue;">
         {% if movies %}
       {% for movie in movies|slice:":4" %}
       <div class="col-md-3 col-sm-6">
@@ -158,7 +158,7 @@
     {% comment %}  {% endcomment %}
 
     <div class="section-title">Current Day Shows</div>
-    <div class="row" style="background-color: lightblue;">
+    <div class="row" style="background-color: red;">
         {% if todat_shows %}
       {% for show in todat_shows %}
       <div class="col-md-3 col-sm-6">
@@ -191,7 +191,7 @@
 {% comment %}  {% endcomment %}
 
 <div class="section-title">Tomorrow   Shows</div>
-<div class="row">
+<div class="row" style="background-color: blue;">
     {% if movies_with_shows_tomorrow %}
   {% for show in movies_with_shows_tomorrow %}
   <div class="col-md-3 col-sm-6">
