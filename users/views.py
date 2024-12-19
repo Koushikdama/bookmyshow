@@ -26,6 +26,7 @@ def home(request):
     # Filter the shows for tomorrow's date
     tomorrow_shows = Theater.objects.filter(time__date=tomorrow_date)
     print("tomarrow", tomorrow_shows)
+   
 
     # Extract movies from the shows
     movies_with_shows_today = Movie.objects.filter(theaters__in=todays_shows).distinct()
@@ -34,12 +35,14 @@ def home(request):
     print("movies_with_shows_today", movies_with_shows_today)
     for i in movies_with_shows_today:
         print("iii", i.name)
+    for i in movies_with_shows_tomorrow:
+        print(i.image)
     
     # Pass the data to the template
     return render(request, 'home.html', {
         'movies': movies,
         'todat_shows': movies_with_shows_today,
-        'movies_with_shows_tomorrow':movies_with_shows_tomorrow,
+        "movies_with_shows_tomorrow":movies_with_shows_tomorrow,
         
     })
 
